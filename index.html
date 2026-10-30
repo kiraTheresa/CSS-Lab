@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="13 个可交互实验，重新认识 HTML、CSS 与 JavaScript 的能力边界。"><title>CSS Lab — 不止于样式</title><link rel="stylesheet" href="lab.css"><script src="lab.js" defer></script></head>
+<body>
+<a class="skip" href="#experiments">跳到实验</a>
+<div class="shell">
+  <header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">{ }</span> CSS LAB</a><nav aria-label="主导航"><a href="#experiments">探索实验</a><a href="#boundaries">能力边界</a></nav><span class="edition mono">FIELD NOTES / 2026.10</span></header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div><p class="eyebrow">THE UNEXPECTED SIDE OF CSS</p><h1 id="hero-title">原来，CSS<br>还能<em>这样做。</em></h1><p class="lead">从给文字上色，到感知关系、响应空间、编排变化。亲手试试这 13 个实验，重新认识浏览器里的这门语言。</p><div class="hero-actions"><a class="button primary" href="#experiments">开始探索 <span aria-hidden="true">↗</span></a><span class="small">原生能力 · 无框架 · 可查看代码</span></div></div>
+      <div class="hero-art" aria-label="由 CSS 渐变和伪元素绘制的装饰图形" role="img"><div class="orb"></div><span class="art-tag">::before</span><span class="art-tag second">repeating-conic-gradient()</span><span class="art-label mono">NO IMAGE. JUST CSS.</span></div>
+    </section>
+    <div class="manifest"><div><strong>01 / HTML 定义意义</strong><p>内容、语义、原生控件与交互。</p></div><div><strong>02 / CSS 描述关系</strong><p>布局、环境、状态与视觉变化。</p></div><div><strong>03 / JS 处理逻辑</strong><p>数据、流程、持久化与外部世界。</p></div></div>
+    <section id="experiments" aria-labelledby="experiments-title">
+      <div class="section-heading"><div><span class="eyebrow">PLAY / OBSERVE / UNDERSTAND</span><h2 id="experiments-title">把「没想到」变成「试过了」。</h2></div><p>标记检测当前浏览器的语法或规则支持，不代表所有行为都兼容。不支持时会保留静态内容，实际效果以现场为准。</p></div>
+      <noscript><p>JavaScript 已禁用：CSS 和原生控件仍可工作；滑块控制、兼容性检测不可用，关键代码仍可阅读。</p></noscript>
+      <p class="motion-note">系统已开启「减少动态效果」，本页关闭动效；滚动进度展示静态满条。</p>
+      <nav class="jump-list" aria-label="实验目录"><a href="#pseudo">01 伪元素</a><a href="#has">02 :has()</a><a href="#container">03 容器尺寸</a><a href="#scroll">04 滚动动画</a><a href="#scope">05 作用域</a><a href="#anchor">06 锚点</a><a href="#starting">07 入场</a><a href="#scroll-state">08 滚动状态</a><a href="#style-query">09 样式查询</a><a href="#view">10 跨页过渡</a><a href="#attr">11 attr()</a><a href="#theme">12 明暗主题</a><a href="#trim">13 文本修剪</a></nav>
+      <div class="grid">
+        <article class="experiment" id="pseudo" data-support="selector(::before)">
+          <div class="experiment-head"><div class="meta"><span>01 / GENERATED VISUALS</span><span class="support">未检测</span></div><h3>没有图片，也没有额外节点。</h3><p class="description">两枚伪元素，给一张普通卡片「剪」出两侧缺口。CSS 可以生成装饰性的视觉结构。</p></div>
+          <div class="stage center pseudo-stage"><div class="pseudo-ticket">CSS EXPLORER<br><span class="mono small" style="color:#d5edaa">ADMIT ONE / 001</span></div><label class="field"><input type="checkbox">显露两枚伪元素</label></div>
+          <p class="hint">试一试 → 勾选后，缺口变为橙色，露出装饰层的形状。</p><p class="boundary"><b>边界：</b>票面文字是 HTML；两侧圆形才是 CSS。缺口只是用同色圆形模拟。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>.ticket::before, .ticket::after {
+  content: "";
+  position: absolute;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--stage-color);
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/::before">MDN / ::before ↗</a></details>
+        </article>
+        <article class="experiment" id="has" data-support="selector(:has(input:checked))">
+          <div class="experiment-head"><div class="meta"><span>02 / RELATIONAL SELECTOR</span><span class="support">未检测</span></div><h3>子元素变了，父元素知道。</h3><p class="description"><code>:has()</code> 让外层卡片直接响应内部复选框的状态，不需要事件监听器。</p></div>
+          <div class="stage"><label class="choice-card field"><input id="plan-choice" type="checkbox"><span><strong>周末探索计划</strong><br><span class="small">点击卡片加入计划 <span class="selected">/ 已选中 ✓</span></span></span></label></div>
+          <p class="hint">试一试 → 点击卡片，或用 Tab 聚焦后按空格。</p><p class="boundary"><b>分工：</b>HTML 提供可操作的复选框，CSS 响应选中状态；没有保存数据。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>.choice-card:has(input:checked) {
+  border-color: #31583c;
+  background: #dcecc8;
+  box-shadow: 5px 5px 0 #31583c22;
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:has">MDN / :has() ↗</a></details>
+        </article>
+        <article class="experiment" id="container" data-support="container-type:inline-size">
+          <div class="experiment-head"><div class="meta"><span>03 / CONTAINER SIZE</span><span class="support">未检测</span></div><h3>看容器脸色，不看屏幕大小。</h3><p class="description">浏览器窗口不动。只改变组件可用的空间，内部就能从纵向排列切换为横向排列。</p></div>
+          <div class="stage"><div id="card-width" class="resizable"><div class="responsive-card"><div class="landscape" aria-hidden="true"></div><div><strong>山野来信</strong><p>同一个组件，在侧栏和主栏里各得其所。</p></div></div></div><div><label for="width-control" class="small">容器宽度 <output for="width-control">100%</output></label><input id="width-control" type="range" min="45" max="100" value="100" data-control="width" data-target="card-width" data-unit="%"></div></div>
+          <p class="hint">试一试 → 拖动滑块。容器超过 340px 时改为两列；窄屏可能始终为一列。</p><p class="boundary"><b>分工：</b>JS 只改变容器宽度；决定布局的条件写在 CSS 中。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>.resizable { container: card / inline-size; }
+.responsive-card { display: grid; }
+@container card (min-width: 340px) {
+  .responsive-card {
+    grid-template-columns: 105px 1fr;
+  }
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries">MDN / 容器查询 ↗</a></details>
+        </article>
+        <article class="experiment" id="scroll" data-support="animation-timeline:scroll()">
+          <div class="experiment-head"><div class="meta"><span>04 / SCROLL-DRIVEN ANIMATION</span><span class="support">未检测</span></div><h3>滚动条，就是动画时间轴。</h3><p class="description">这里没有 scroll 监听器。绿色进度条的动画进度直接绑定到阅读区的滚动位置。</p></div>
+          <div class="stage" style="padding:12px"><div class="reader" tabindex="0" role="region" aria-label="滚动动画阅读区"><div class="progress-track" aria-hidden="true"><div class="read-progress"></div></div><p><strong>01 — 时间不再是唯一的刻度。</strong><br>把鼠标移进这里，向下滚动。也可以聚焦后使用方向键。</p><p><strong>02 — 停下来，动画也停下。</strong><br>普通动画随时间变化；滚动动画随滚动位置变化。</p><p><strong>03 — 往回滚，也能倒着播放。</strong><br>无需计算百分比，也无需逐帧修改宽度。</p><p><strong>04 — 抵达终点。</strong><br>这也是阅读进度、横向展览和滚动叙事的基础。</p></div></div>
+          <p class="hint">试一试 → 滚动这张卡片里的阅读区，观察顶部绿线。</p><p class="boundary"><b>边界：</b>呈现滚动进度不等于业务上已读，也不会保存阅读记录。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>.read-progress {
+  transform-origin: left;
+  animation: read-progress linear both;
+  animation-timeline: scroll(nearest block);
+}
+@keyframes read-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-timeline">MDN / animation-timeline ↗</a></details>
+        </article>
+        <article class="experiment" id="scope" data-probe="--scope-hit">
+          <div class="experiment-head"><div class="meta"><span>05 / SCOPED STYLES</span><span class="support">未检测</span></div><h3>样式，也可以有自己的围栏。</h3><p class="description"><code>@scope</code> 指定规则从哪里开始、到哪里停止。这里三个段落都是普通的 <code>&lt;p&gt;</code>。</p></div>
+          <div class="stage lilac"><p class="small" style="margin:0">围栏外：普通文字</p><div class="scope-garden"><p data-probe>围栏内：我被作用域染成紫色</p><div class="scope-stop"><p style="margin:0">停止边界内：我保持原样</p></div></div></div>
+          <p class="hint">观察 → 紫色规则只命中中间一段，遇到停止边界便结束。</p><p class="boundary"><b>边界：</b>这不是 Shadow DOM 的完整封装；继承、外部规则仍可能产生影响。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>@scope (.scope-garden) to (.scope-stop) {
+  p {
+    color: #6c3caf;
+    font-weight: 700;
+  }
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@scope">MDN / @scope ↗</a></details>
+        </article>
+        <article class="experiment" id="anchor" data-support="(anchor-name:--demo-anchor) and (position-area:top) and (position-try-fallbacks:bottom)">
+          <div class="experiment-head"><div class="meta"><span>06 / ANCHOR POSITIONING</span><span class="support">未检测</span></div><h3>气泡自己找位置，还会避让。</h3><p class="description">气泡引用命名锚点。上方空间不足时，浏览器尝试把它放到下方；锚定查询再调整箭头与颜色。</p></div>
+          <div class="stage" style="padding:16px"><div class="anchor-arena" id="anchor-arena"><span class="anchor-target">参照物</span><div class="anchor-tip"><span class="tip-inner">我跟随锚点，不计算坐标。</span></div></div><div><label class="small" for="anchor-control">锚点距顶部 <output for="anchor-control">125px</output></label><input id="anchor-control" type="range" min="10" max="155" value="125" data-control="--anchor-y" data-target="anchor-arena" data-unit="px"></div></div>
+          <p class="hint">试一试 → 将滑块移到最左。<span id="anchor-query-status">锚定查询支持待检测。</span></p><p class="boundary"><b>分工：</b>JS 只移动参照物。定位、避让、翻转后的样式都由 CSS 负责。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>.anchor-target { anchor-name: --demo-anchor; }
+.anchor-tip {
+  position: absolute;
+  position-anchor: --demo-anchor;
+  position-area: top;
+  position-try-fallbacks: bottom;
+  container-type: anchored;
+}
+@container anchored(fallback: bottom) {
+  .tip-inner { background: #e1d8f4; }
+  /* 同时将箭头移到气泡上方 */
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Anchor_positioning/Anchored_container_queries">MDN / 锚定容器查询 ↗</a></details>
+        </article>
+        <article class="experiment" id="starting" data-interface="CSSStartingStyleRule">
+          <div class="experiment-head"><div class="meta"><span>07 / ENTRY TRANSITION</span><span class="support">未检测</span></div><h3>第一次出现，也能平滑入场。</h3><p class="description"><code>@starting-style</code> 补上元素入场时缺失的「上一帧」。配合原生 Popover，打开动作也无需 JS。</p></div>
+          <div class="stage lilac center"><span class="mono" style="font-size:42px;color:#6c4bb4" aria-hidden="true">0 → 1</span><button popovertarget="arrival">打开原生浮层 ↗</button></div>
+          <div id="arrival" popover><p class="eyebrow">HELLO, FIRST FRAME</p><h2>我有了入场的起点。</h2><p>HTML 负责打开和关闭；CSS 负责淡入与位移。按 Esc 或点击外部也能关闭。</p><button popovertarget="arrival" popovertargetaction="hide">关闭浮层</button></div>
+          <p class="hint">试一试 → 反复打开、关闭，观察入场与离场。</p><p class="boundary"><b>边界：</b>Popover 是 HTML 原生能力；过渡来自 CSS，并不是 CSS 创建了浮层行为。</p>
+          <details><summary>查看关键 HTML / CSS ↗</summary><pre><code>&lt;button popovertarget="arrival"&gt;打开&lt;/button&gt;
+&lt;div id="arrival" popover&gt;内容&lt;/div&gt;
+
+#arrival {
+  opacity: 0;
+  transition: opacity .45s,
+    display .45s allow-discrete,
+    overlay .45s allow-discrete;
+}
+#arrival:popover-open { opacity: 1; }
+@starting-style {
+  #arrival:popover-open { opacity: 0; }
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@starting-style">MDN / @starting-style ↗</a></details>
+        </article>
+        <article class="experiment" id="scroll-state" data-support="container-type:scroll-state">
+          <div class="experiment-head"><div class="meta"><span>08 / SCROLL STATE</span><span class="support">未检测</span></div><h3>表头知道自己「吸顶」了。</h3><p class="description">滚动状态查询可以感知 sticky 元素是否被吸附，再改变其后代样式，无需测量位置。</p></div>
+          <div class="stage" style="padding:12px"><div class="sticky-reader" tabindex="0" role="region" aria-label="滚动状态实验"><div class="sticky-spacer">向下滚动，让下面的表头到达顶部 ↓</div><div class="sticky-query"><div class="sticky-label"><span class="free-word">尚未吸顶 / 普通状态</span><span class="stuck-word">已吸顶 / CSS 检测到 stuck ✓</span></div></div><div class="sticky-content">观察表头背景与文字的变化。<br><br>还可以查询 snapped、scrollable 等状态。<br><br>滚回最上面，表头就恢复原样。</div></div></div>
+          <p class="hint">试一试 → 在内部滚动，表头吸顶后变成深绿色。</p><p class="boundary"><b>边界：</b>查询应用于容器的后代，所以 sticky 外层和着色内层分开。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>.sticky-query {
+  position: sticky;
+  top: 0;
+  container-type: scroll-state;
+}
+@container scroll-state(stuck: top) {
+  .sticky-label {
+    background: #31583c;
+    color: white;
+  }
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Conditional_rules/Container_scroll-state_queries">MDN / 滚动状态查询 ↗</a></details>
+        </article>
+        <article class="experiment" id="style-query" data-probe="--style-hit">
+          <div class="experiment-head"><div class="meta"><span>09 / STYLE QUERY</span><span class="support">未检测</span></div><h3>一个变量，就能切换一套表现。</h3><p class="description">容器查询不只问「多宽」，还可以问「自定义属性是什么」。后代组件读懂容器的视觉模式。</p></div>
+          <div class="stage"><div class="theme-container"><label class="field"><input type="checkbox">切换为大胆模式</label><div class="style-result"><strong>同一个组件，不同的性格。</strong></div></div><div style="--mood:bold" hidden><span class="style-result" data-probe></span></div></div>
+          <p class="hint">试一试 → 勾选后，自定义属性从 calm 变为 bold，卡片改色并改变圆角。</p><p class="boundary"><b>边界：</b>这里查询自定义属性；不要推断任意 CSS 属性都已能查询。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>.theme-container { --mood: calm; }
+.theme-container:has(input:checked) { --mood: bold; }
+@container style(--mood: bold) {
+  .style-result {
+    background: #e5d8fa;
+    border-radius: 35px 8px;
+  }
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_size_and_style_queries">MDN / 样式查询 ↗</a></details>
+        </article>
+        <article class="experiment" id="view" data-interface="CSSViewTransitionRule">
+          <div class="experiment-head"><div class="meta"><span>10 / CROSS-DOCUMENT TRANSITION</span><span class="support">未检测</span></div><h3>换了一页，视觉仍然连续。</h3><p class="description">两个真实 HTML 文件，通过同名元素建立视觉联系。无需把站点改成单页应用。</p></div>
+          <div class="stage"><div class="portal"><div class="portal-object" aria-hidden="true">✳</div><a class="button" href="specimen.html">跟它去下一页 ↗</a></div></div>
+          <p class="hint" id="http-note">试一试 → 点击链接，看左边的形状在新页面中放大；再点击返回。</p><p class="boundary"><b>条件：</b>同源 HTTP 导航、跨文档过渡支持、未开启减少动态效果。否则正常跳转。</p>
+          <details><summary>查看两页共享的 CSS ↗</summary><pre><code>@view-transition { navigation: auto; }
+.portal-object {
+  view-transition-name: specimen;
+}
+::view-transition-group(specimen) {
+  animation-duration: .7s;
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@view-transition">MDN / @view-transition ↗</a></details>
+        </article>
+        <article class="experiment" id="attr" data-support="(width:attr(data-value type(<percentage>))) and (background:attr(data-color type(<color>)))">
+          <div class="experiment-head"><div class="meta"><span>11 / TYPED ATTRIBUTE</span><span class="support">未检测</span></div><h3>HTML 属性，直接成为样式值。</h3><p class="description">高级 <code>attr()</code> 能把属性解析成百分比或颜色。三条数据共用同一条规则，长度与颜色直接读取属性。</p></div>
+          <div class="stage peach"><div class="attr-bars" aria-label="静态数据：探索 92%，理解 68%，实践 45%"><div class="attr-bar" data-value="92%" data-color="#31583c">92% / 探索</div><div class="attr-bar" data-value="68%" data-color="#6c4bb4">68% / 理解</div><div class="attr-bar" data-value="45%" data-color="#ac482b">45% / 实践</div></div></div>
+          <p class="hint">观察 → 这不是三套宽度类名。可在开发者工具里修改 data-value（如 75%）。</p><p class="boundary"><b>边界：</b>CSS 读取已有属性，不获取远程数据。浏览器不支持时显示等长灰条。</p>
+          <details><summary>查看关键 HTML / CSS ↗</summary><pre><code>&lt;div class="attr-bar"
+  data-value="92%" data-color="#31583c"&gt;92%&lt;/div&gt;
+
+.attr-bar {
+  width: attr(data-value type(&lt;percentage&gt;), 50%);
+  background: attr(data-color type(&lt;color&gt;), #31583c);
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/attr">MDN / attr() ↗</a></details>
+        </article>
+        <article class="experiment" id="theme" data-support="color:light-dark(white,black)">
+          <div class="experiment-head"><div class="meta"><span>12 / COLOR SCHEME</span><span class="support">未检测</span></div><h3>一行颜色，明暗两种答案。</h3><p class="description"><code>light-dark()</code> 根据生效的 color-scheme 选取颜色，也能跟随系统偏好。</p></div>
+          <div class="stage"><div class="color-demo"><label class="field"><input type="checkbox">此卡片使用暗色方案</label><p>内容与结构相同。背景、文字和原生控件一起适应明暗环境。</p></div></div>
+          <p class="hint">试一试 → 切换卡片主题。只影响本示例，方便同时比较其他实验。</p><p class="boundary"><b>分工：</b>复选框驱动 color-scheme；light-dark() 选择颜色值，不负责保存偏好。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>.color-demo {
+  color-scheme: light;
+  background: light-dark(#fffefa, #263327);
+  color: light-dark(#263327, #e5efd8);
+}
+.color-demo:has(input:checked) {
+  color-scheme: dark;
+}
+/* 跟随系统：color-scheme: light dark; */</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/light-dark">MDN / light-dark() ↗</a></details>
+        </article>
+        <article class="experiment" id="trim" data-support="(text-box-trim:trim-both) and (text-box-edge:cap alphabetic)">
+          <div class="experiment-head"><div class="meta"><span>13 / TYPOGRAPHIC METRICS</span><span class="support">未检测</span></div><h3>对齐的是字，不再是看不见的空白。</h3><p class="description">同样的字号、同样的行高。修剪文本框上下的额外空间，让视觉边缘更贴合字形度量。</p></div>
+          <div class="stage lilac"><div class="trim-row"><div class="trim-item"><small>BEFORE / 默认</small><div class="trim-text">Ag</div></div><div class="trim-item"><small>AFTER / 修剪</small><div class="trim-text trimmed">Ag</div></div></div></div>
+          <p class="hint">观察 → 紫色背景是文本框。右侧从大写字母顶端到字母基线，g 的下伸部仍可超出框。</p><p class="boundary"><b>边界：</b>这是字体度量驱动的修剪，不是裁切字形；不同字体、文字系统的效果有差异。</p>
+          <details><summary>查看关键 CSS ↗</summary><pre><code>.trim-text {
+  font: 52px / 1.5 Arial, sans-serif;
+}
+.trimmed {
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+}</code></pre><a class="source" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-box-trim">MDN / text-box-trim ↗</a></details>
+        </article>
+        <aside class="experiment" style="background:#e5ecd9;padding:32px;justify-content:center"><span class="eyebrow">THE BIGGER PICTURE</span><h3 style="font-size:32px;line-height:1.4">从「怎么画」，<br>到「什么条件下，<br>应该怎样呈现」。</h3><p style="font-size:14px">现代 CSS 能感知关系、空间和状态。把这些表现规则交给浏览器，JavaScript 才能专注于真正的数据与流程。</p><a href="#boundaries">继续看：能力的边界 ↓</a></aside>
+      </div>
+    </section>
+    <section class="boundary-note" id="boundaries" aria-labelledby="boundary-title"><p class="eyebrow">KNOW THE BOUNDARY</p><h2 id="boundary-title">厉害，但不是万能。</h2><p><strong>HTML：</strong>按钮、表单、标题、内容与原生交互。<strong>CSS：</strong>布局、视觉、状态响应与环境适配。<strong>JavaScript：</strong>业务规则、网络请求、数据处理和持久化。这是实用的职责划分，不是三门技术绝对互斥。</p><p>两处值得修正：CSS 不能给元素设置 <code>role</code>；应使用原生语义元素，必要时通过 HTML 属性或 JS 设置 ARIA。伪元素生成内容也并非一定不进入可访问性树，各浏览器与辅助技术行为可能不同，关键文案应保留在 HTML 中。</p><p>视觉顺序不等于阅读与焦点顺序。CSS 不会像 DOM API 一样增删真实节点，但 <code>display: none</code> 等样式会影响可访问性树，不能把「语义完全不受 CSS 影响」当作规则。</p><p class="small" style="margin-bottom:0">本页 JS 仅用于两个演示滑块、兼容性提示和本地访问提示。没有用 JS 模拟缺失的 CSS 能力。代码面板是关键片段，完整样式见 lab.css。<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/content#accessibility">参考：生成内容与可访问性 ↗</a></p></section>
+  </main>
+  <footer><span class="mono">CSS LAB / BUILT WITH THE PLATFORM.</span><a href="#hero-title">回到顶部 ↑</a></footer>
+</div>
+</body></html>

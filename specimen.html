@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>跨页视图过渡 · CSS Lab</title><link rel="stylesheet" href="lab.css"></head>
+<body><main class="shell detail-page">
+  <a class="button" href="index.html#view">← 返回实验室</a>
+  <p class="eyebrow" style="margin-top:45px">EXPERIMENT 10 / ANOTHER DOCUMENT</p>
+  <h1>同一个形状，<br><em>另一张页面。</em></h1>
+  <p class="lead">你刚刚进行了一次真正的页面导航。浏览器将两页中同名的元素关联，生成位置与尺寸之间的过渡。</p>
+  <div class="portal-object" aria-hidden="true">✳</div>
+  <p>两个页面都声明 <code>@view-transition { navigation: auto; }</code>，共享元素使用相同的 <code>view-transition-name: specimen</code>。此页面没有 JavaScript。</p>
+  <p class="small">需同源 HTTP 页面、支持跨文档视图过渡的浏览器，且系统未开启减少动态效果。不支持时仍可正常跳转。</p>
+  <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@view-transition">阅读 MDN：跨文档视图过渡 ↗</a>
+</main></body></html>
